@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
+import path from "path";
 
 dotenv.config();
 
@@ -9,15 +10,17 @@ console.log("🔥 SERVER STARTING...");
 
 const app = express();
 
+/* =========================
+   MIDDLEWARE
+========================= */
+
 app.use(cors());
 app.use(express.json());
 
-// ✅ Test route
-app.get("/", (req, res) => {
-  res.send("Backend is running ✅");
-});
+/* =========================
+   EMAIL API
+========================= */
 
-// ✅ EMAIL API
 app.post("/api/contact", async (req, res) => {
   const { name, email, projectType, message } = req.body;
 
@@ -32,7 +35,7 @@ app.post("/api/contact", async (req, res) => {
       },
     });
 
-    // 📧 1. Email to YOU
+    // 📧 Email to YOU
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -47,68 +50,24 @@ app.post("/api/contact", async (req, res) => {
       `,
     });
 
-    // 📧 2. AUTO REPLY to CLIENT 🔥
+    // 📧 Auto reply to CLIENT
     await transporter.sendMail({
-     from: process.env.EMAIL_USER,
-  to: email,
-  subject: "We’ve received your inquiry — CoderCreative Studio",
-  html: `
-  <div style="font-family: Arial, sans-serif; background:#f6f7fb; padding:40px 0;">
-    
-    <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-      
-      <!-- HEADER -->
-      <div style="background:#2f5d50; padding:20px; text-align:center;">
-        <h1 style="color:#ffffff; margin:0; font-size:20px;">
-          CoderCreative Studio
-        </h1>
-      </div>
-
-      <!-- BODY -->
-      <div style="padding:30px; color:#333;">
-        
-        <h2 style="margin-top:0;">Hello ${name},</h2>
-
-        <p>
-          Thank you for reaching out to <strong>CoderCreative Studio</strong>. 
-          We’ve received your message and our team is currently reviewing your request.
-        </p>
-
-        <p>
-          We aim to respond as soon as possible with the next steps.
-        </p>
-
-        <!-- MESSAGE BOX -->
-        <div style="background:#f4f6f8; padding:15px; border-radius:8px; margin:20px 0;">
-          <p style="margin:0;"><strong>Your Message:</strong></p>
-          <p style="margin-top:8px;">${message}</p>
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "We’ve received your inquiry — CoderCreative Studio",
+      html: `
+        <div style="font-family: Arial; padding:20px;">
+          <h2>Hello ${name},</h2>
+          <p>We’ve received your message and will respond shortly.</p>
+          <p><b>Your message:</b></p>
+          <p>${message}</p>
+          <br/>
+          <p>— CoderCreative Studio</p>
         </div>
-
-        <p>
-          If you have additional details, feel free to reply to this email.
-        </p>
-
-        <p style="margin-top:30px;">
-          Best regards,<br/>
-          <strong>CoderCreative Studio</strong><br/>
-          <span style="color:#666;">Digital Solutions & Web Development</span>
-        </p>
-
-      </div>
-
-      <!-- FOOTER -->
-      <div style="background:#f1f1f1; padding:15px; text-align:center; font-size:12px; color:#777;">
-        © ${new Date().getFullYear()} CoderCreative Studio. All rights reserved.
-      </div>
-
-    </div>
-
-  </div>
-  `,
-});
+      `,
+    });
 
     console.log("✅ Emails sent");
-
     res.json({ success: true });
 
   } catch (error) {
@@ -117,7 +76,27 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-// ✅ Start server
-app.listen(process.env.PORT || 5000, () => {
-  console.log("🚀 Server running on http://localhost:5000");
+/* =========================
+   SERVE FRONTEND (IMPORTANT)
+========================= */
+
+// project root path
+const __dirname = path.resolve();
+
+// serve frontend build
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+
+// fallback for React Router
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
+});
+
+/* =========================
+   START SERVER
+========================= */
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
