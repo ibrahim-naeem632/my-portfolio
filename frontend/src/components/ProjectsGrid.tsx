@@ -6,6 +6,7 @@ type Project = {
   fullDesc: string;
   image: string;
   tech: string[];
+  results?: string[]; // ✅ ADD THIS
   link?: string;
   featured?: boolean;
 };
