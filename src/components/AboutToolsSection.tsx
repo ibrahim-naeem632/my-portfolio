@@ -1,223 +1,144 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+import {
+  FaChartLine,
+  FaClock,
+  FaGlobeAmericas,
+  FaHandshake,
+} from "react-icons/fa";
+import { useGsapReveal } from "../hooks/useGsapReveal";
 
-/* ─── Types ─── */
-type Category = "frontend" | "backend" | "devops" | "design";
-
-type SkillItem = {
-  name: string;
-  category: Category;
-};
-
-/* ─── Data ─── */
-const core = "JavaScript";
-
-const skills: SkillItem[] = [
-  { name: "React", category: "frontend" },
-  { name: "Next.js", category: "frontend" },
-  { name: "SvelteKit", category: "frontend" },
-  { name: "HTML", category: "frontend" },
-  { name: "CSS", category: "frontend" },
-  { name: "Tailwind", category: "frontend" },
-
-  { name: "Node.js", category: "backend" },
-  { name: "Express", category: "backend" },
-  { name: "MongoDB", category: "backend" },
-  { name: "PostgreSQL", category: "backend" },
-  { name: "Firebase", category: "backend" },
-  { name: "GraphQL", category: "backend" },
-  { name: "REST APIs", category: "backend" },
-  { name: "JWT", category: "backend" },
-
-  { name: "Git", category: "devops" },
-  { name: "GitHub", category: "devops" },
-  { name: "Docker", category: "devops" },
-  { name: "CI/CD", category: "devops" },
-  { name: "Vercel", category: "devops" },
-  { name: "Optimization", category: "devops" },
-  { name: "Caching", category: "devops" },
-
-  { name: "Figma", category: "design" },
-  { name: "UI Systems", category: "design" },
-  { name: "Accessibility", category: "design" },
-  { name: "SEO", category: "design" },
-  { name: "Analytics", category: "design" },
+const deliveryCards = [
+  {
+    icon: <FaGlobeAmericas size={18} />,
+    title: "International-Ready Websites",
+    description:
+      "Clean, premium pages built for foreign clients, remote teams, and businesses that need to look trustworthy from the first visit.",
+  },
+  {
+    icon: <FaClock size={18} />,
+    title: "Fast Turnaround",
+    description:
+      "Focused execution with clear milestones, quick revisions, and reliable delivery without sacrificing polish or responsiveness.",
+  },
+  {
+    icon: <FaChartLine size={18} />,
+    title: "Conversion Focus",
+    description:
+      "Layouts are shaped around strong messaging, clean calls to action, mobile clarity, and a smooth path from visitor to lead.",
+  },
+  {
+    icon: <FaHandshake size={18} />,
+    title: "Long-Term Support",
+    description:
+      "After launch, the site stays easy to improve with maintainable components, clean structure, and room for future content.",
+  },
 ];
 
-const categoryColors: Record<Category, string> = {
-  frontend: "#4ade80",
-  backend: "#60a5fa",
-  devops: "#f59e0b",
-  design: "#c084fc",
-};
+const milestones = [
+  "Brand and audience review",
+  "Responsive UI direction",
+  "Development and animation",
+  "Launch and refinement",
+];
 
-const categoryLabels: Record<Category, string> = {
-  frontend: "Frontend",
-  backend: "Backend",
-  devops: "DevOps",
-  design: "Design",
-};
-
-/* ─── Reveal Hook ─── */
-function useReveal(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        setVisible(true);
-        obs.unobserve(el);
-      }
-    }, { threshold });
-
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-
-  return [ref, visible] as const;
-}
-
-/* ─── Component ─── */
 const AboutToolsSection: React.FC = () => {
-  const [sectionRef, sectionVisible] = useReveal(0.1);
-  const [hoveredCategory, setHoveredCategory] = useState<Category | null>(null);
+  const sectionRef = useGsapReveal<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="bg-[#0f2e28] py-32 text-white overflow-hidden">
-      <div className="mx-auto max-w-[1200px] px-6 text-center">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-[#0b2c26] py-20 text-white sm:py-28"
+    >
+      <div
+        data-parallax
+        className="pointer-events-none absolute -left-36 top-8 h-[30rem] w-[30rem] rounded-full bg-[#6ee7b7]/10 blur-[150px]"
+      />
+      <div className="pointer-events-none absolute -right-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-white/5 blur-[140px]" />
 
-        {/* HEADER */}
-        <div
-          className="mb-16 max-w-2xl mx-auto"
-          style={{
-            opacity: sectionVisible ? 1 : 0,
-            transform: sectionVisible ? "translateY(0)" : "translateY(30px)",
-            transition: "all 0.8s ease",
-          }}
-        >
-          <p className="text-sm font-semibold text-[#2f5d50]">
-            Tools & Stack
-          </p>
+      <div className="relative mx-auto max-w-[1200px] px-4 sm:px-6">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+          <div>
+            <div data-reveal className="max-w-2xl">
+              <p className="text-sm font-semibold text-[#6ee7b7]">
+                Global Delivery
+              </p>
 
-          <h2 className="mt-2 text-3xl font-bold">
-            Technologies behind our work
-          </h2>
+              <h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+                Websites that feel ready for serious clients
+              </h2>
 
-          <p className="mt-4 text-white/70 text-sm">
-            A carefully structured stack designed for performance,
-            scalability, and real-world applications.
-          </p>
+              <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                This section now focuses on the value behind the work: premium
+                presentation, responsive experience, conversion clarity, and a
+                delivery process that feels professional for international
+                clients.
+              </p>
+            </div>
 
-          {/* CATEGORY BUTTONS */}
-          <div className="mt-8 flex items-center justify-center gap-5 flex-wrap">
-            {(Object.keys(categoryLabels) as Category[]).map((cat) => {
-              const isActive = hoveredCategory === null || hoveredCategory === cat;
-
-              return (
-                <button
-                  key={cat}
-                  className="flex items-center gap-2 text-xs font-medium transition-all duration-300"
-                  style={{
-                    color: isActive ? categoryColors[cat] : "rgba(255,255,255,0.2)",
-                  }}
-                  onMouseEnter={() => setHoveredCategory(cat)}
-                  onMouseLeave={() => setHoveredCategory(null)}
+            <div className="mt-10 grid gap-5 sm:grid-cols-2">
+              {deliveryCards.map((card) => (
+                <article
+                  data-reveal
+                  key={card.title}
+                  className="group rounded-2xl border border-white/10 bg-white/[0.055] p-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-[#6ee7b7]/30 hover:bg-white/[0.075] hover:shadow-2xl hover:shadow-black/20"
                 >
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{
-                      background: categoryColors[cat],
-                      opacity: isActive ? 1 : 0.3,
-                    }}
-                  />
-                  {categoryLabels[cat]}
-                </button>
-              );
-            })}
+                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#6ee7b7]/10 text-[#6ee7b7] transition group-hover:bg-[#6ee7b7] group-hover:text-[#0b2c26]">
+                    {card.icon}
+                  </div>
+
+                  <h3 className="mt-5 text-lg font-semibold">{card.title}</h3>
+
+                  <p className="mt-2 text-sm leading-relaxed text-white/68">
+                    {card.description}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* ORBIT */}
-        <div className="relative mx-auto h-[650px] max-w-[1000px] flex items-center justify-center">
-
-          {/* CENTER */}
-          <div
-            className="absolute z-20 h-32 w-32 rounded-full bg-[#2f5d50] flex items-center justify-center font-semibold"
-            style={{
-              opacity: sectionVisible ? 1 : 0,
-              scale: sectionVisible ? "1" : "0.6",
-              transition: "all 0.8s ease",
-            }}
+          <aside
+            data-reveal
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-2xl shadow-black/20 backdrop-blur-md sm:p-8"
           >
-            {core}
-          </div>
+            <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#6ee7b7]/10 blur-3xl" />
 
-          {/* SKILLS */}
-          {skills.map((skill, i) => {
-            const total = skills.length;
-            const angle = (i / total) * 2 * Math.PI;
-            const radius = i % 3 === 0 ? 360 : i % 3 === 1 ? 300 : 190;
+            <p className="relative text-sm font-semibold text-[#6ee7b7]">
+              Delivery Snapshot
+            </p>
 
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-
-            const color = categoryColors[skill.category];
-            const isActive = hoveredCategory === null || hoveredCategory === skill.category;
-            const isHighlighted = hoveredCategory === skill.category;
-
-            return (
-              <div
-                key={skill.name}
-                className="absolute"
-                style={{
-                  left: "50%",
-                  top: "50%",
-                  transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
-                  opacity: sectionVisible ? (isActive ? 1 : 0.15) : 0,
-                  transition: "opacity 0.3s ease",
-                }}
-              >
+            <div className="relative mt-6 grid grid-cols-2 gap-3">
+              {[
+                ["24h", "reply time"],
+                ["100%", "responsive"],
+                ["4", "core stages"],
+                ["Global", "client fit"],
+              ].map(([value, label]) => (
                 <div
-                  className="px-3 py-1.5 rounded-full text-xs md:text-sm animate-float"
-                  style={{
-                    background: isHighlighted ? `${color}20` : "rgba(255,255,255,0.05)",
-                    border: `1px solid ${isHighlighted ? `${color}50` : "rgba(255,255,255,0.1)"}`,
-                    color: isHighlighted ? color : "rgba(255,255,255,0.7)",
-                  }}
-                  onMouseEnter={() => setHoveredCategory(skill.category)}
-                  onMouseLeave={() => setHoveredCategory(null)}
+                  key={label}
+                  className="rounded-2xl border border-white/10 bg-black/10 p-4"
                 >
-                  {skill.name}
+                  <p className="text-2xl font-bold">{value}</p>
+                  <p className="mt-1 text-xs text-white/55">{label}</p>
                 </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+
+            <div className="relative mt-8 space-y-4">
+              {milestones.map((item, index) => (
+                <div key={item} className="flex gap-3">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#6ee7b7]/12 text-xs font-semibold text-[#6ee7b7]">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium text-white">{item}</p>
+                    <div className="mt-3 h-px w-full bg-white/10" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
       </div>
-
-      {/* ANIMATIONS */}
-      <style>
-        {`
-          @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-          }
-
-          .animate-float {
-            animation: float 5s ease-in-out infinite;
-          }
-
-          /* ❌ NO MOVEMENT ON HOVER */
-          .animate-float:hover {
-            animation: none !important;
-            transform: translateY(0px) !important;
-          }
-        `}
-      </style>
     </section>
   );
 };

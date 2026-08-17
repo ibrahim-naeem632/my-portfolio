@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  FaComments,
-  FaPencilRuler,
-  FaCode,
-  FaRocket,
-} from "react-icons/fa";
+import { FaCode, FaComments, FaPencilRuler, FaRocket } from "react-icons/fa";
 
 type Step = {
   title: string;
@@ -32,7 +27,7 @@ const steps: Step[] = [
     icon: <FaCode size={20} />,
   },
   {
-    title: "Launch & Ongoing Support",
+    title: "Launch & Support",
     description:
       "After testing and refinement, we launch your product and remain available for improvements and support.",
     icon: <FaRocket size={20} />,
@@ -59,78 +54,62 @@ const ProcessSection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={ref} className="relative bg-[#f8f7f4] py-24 overflow-hidden">
-      {/* 🔥 Glow background */}
+    <section ref={ref} className="relative overflow-hidden bg-[#f3f1eb] py-20 sm:py-24">
       <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#2f5d50]/10 blur-[140px]" />
 
-      <div className="relative mx-auto max-w-[1200px] px-6">
-        {/* Header */}
+      <div className="relative mx-auto max-w-[1200px] px-4 sm:px-6">
         <div
-          className={`mb-16 max-w-2xl transition-all duration-700 ease-out ${
-            visible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-6"
+          className={`mb-14 max-w-2xl transition-all duration-700 ease-out ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           <p className="text-sm font-semibold text-[#2f5d50]">Process</p>
 
-          <h2 className="mt-2 text-3xl font-bold text-[#2b2b2b]">
+          <h2 className="mt-2 text-3xl font-bold leading-tight text-[#2b2b2b] sm:text-4xl">
             A structured approach to delivering quality results
           </h2>
 
           <p className="mt-4 text-sm leading-relaxed text-[#2b2b2b]/70">
-            Our workflow is designed to keep communication clear, reduce friction,
-            and ensure every project is delivered with consistency and precision.
+            Our workflow is designed to keep communication clear, reduce
+            friction, and deliver each project with consistency and precision.
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {steps.map((step, index) => (
             <div
               key={step.title}
-              className={`group relative overflow-hidden rounded-2xl border border-black/10 bg-white/80 backdrop-blur-md p-6 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              className={`group relative overflow-hidden rounded-2xl border border-black/10 bg-white/85 p-6 shadow-sm shadow-black/[0.03] backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 visible
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-10 scale-95"
-              } hover:-translate-y-3 hover:shadow-xl hover:shadow-[#2f5d50]/20`}
+              } hover:-translate-y-2 hover:border-[#2f5d50]/25 hover:shadow-xl hover:shadow-[#2f5d50]/15`}
               style={{ transitionDelay: `${index * 120}ms` }}
             >
-              {/* Step number */}
-              <span className="absolute right-5 top-5 text-4xl font-bold text-black/5">
-                {index + 1}
+              <span className="absolute right-5 top-5 text-5xl font-bold text-black/[0.04]">
+                0{index + 1}
               </span>
 
-              {/* Icon */}
-              <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[#2f5d50]/10 text-[#2f5d50] transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:shadow-md group-hover:shadow-[#2f5d50]/20">
+              <div className="relative mb-5 grid h-12 w-12 place-items-center rounded-xl bg-[#2f5d50]/10 text-[#2f5d50] transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#2f5d50] group-hover:text-white">
                 {step.icon}
               </div>
 
-              {/* Title */}
-              <h3 className="text-lg font-semibold text-[#2b2b2b]">
+              <h3 className="relative text-lg font-semibold text-[#2b2b2b]">
                 {step.title}
               </h3>
 
-              {/* Description */}
-              <p className="mt-2 text-sm leading-relaxed text-[#2b2b2b]/70">
+              <p className="relative mt-2 text-sm leading-relaxed text-[#2b2b2b]/70">
                 {step.description}
               </p>
 
-              {/* 🔥 Animated underline */}
-              <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#2f5d50] transition-all duration-500 ease-out group-hover:w-full"></span>
-
-              {/* 🔥 Hover gradient overlay */}
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-gradient-to-br from-[#2f5d50]/5 to-transparent"></div>
+              <span className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-[#2f5d50] transition-transform duration-500 ease-out group-hover:scale-x-100" />
             </div>
           ))}
         </div>
 
-        {/* Bottom line */}
-        <div className="mt-16 text-center">
-          <p className="text-sm text-[#2b2b2b]/60">
-            Clear communication. Defined process. Reliable delivery.
-          </p>
-        </div>
+        <p className="mt-14 text-center text-sm text-[#2b2b2b]/60">
+          Clear communication. Defined process. Reliable delivery.
+        </p>
       </div>
     </section>
   );

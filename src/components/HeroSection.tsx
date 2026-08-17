@@ -30,8 +30,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   const heightClass =
     height === "medium"
-      ? "h-[65svh]"
-      : "h-[100svh]";
+      ? "min-h-[520px] sm:min-h-[600px]"
+      : "min-h-[calc(100svh-108px)]";
 
   useEffect(() => {
     const t = setTimeout(() => setShow(true), 120);
@@ -39,47 +39,40 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   return (
-    <section className={`relative overflow-hidden bg-black ${heightClass}`}>
-      {/* Background */}
+    <section className={`relative overflow-hidden bg-[#081310] ${heightClass}`}>
       <div
         className="absolute inset-0 bg-cover bg-center animate-hero-bg"
         style={{ backgroundImage: `url(${image})` }}
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/80" />
+      <div className="absolute inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_30%,rgba(47,93,80,0.55),transparent_32rem)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/45 to-[#081310]" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#fbfaf7] to-transparent" />
 
-      {/* Content */}
       <div className="relative z-10 flex h-full items-center">
-        <div className="mx-auto w-full max-w-[1200px] px-6">
-          <div className="grid w-full gap-16 lg:grid-cols-2 items-stretch">
-
-            {/* LEFT */}
+        <div className="mx-auto w-full max-w-[1200px] px-4 py-16 sm:px-6 sm:py-20">
+          <div className="grid w-full items-center gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
             <div className="flex flex-col justify-center">
-
-              {/* Eyebrow */}
               {eyebrow && (
-                <p className={`text-sm tracking-wide text-[#2f5d50] transition-all duration-700 ${
+                <p className={`w-fit rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-md transition-all duration-700 ${
                   show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}>
                   {eyebrow}
                 </p>
               )}
 
-              {/* Title */}
-              <h1 className={`mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl transition-all duration-700 delay-150 ${
+              <h1 className={`mt-5 max-w-4xl text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl transition-all duration-700 delay-150 ${
                 show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}>
                 {title}
               </h1>
 
-              {/* Description */}
               <div className="mt-6 space-y-4">
                 {description.map((p, i) => (
                   <p
                     key={i}
-                    className={`max-w-xl text-white/80 sm:text-lg transition-all duration-700 ${
+                    className={`max-w-2xl text-base leading-relaxed text-white/78 sm:text-lg transition-all duration-700 ${
                       show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                     }`}
                     style={{ transitionDelay: `${300 + i * 120}ms` }}
@@ -89,7 +82,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 ))}
               </div>
 
-              {/* Buttons */}
               {buttons.length > 0 && (
                 <div className={`mt-10 flex flex-col gap-4 sm:flex-row transition-all duration-700 delay-[850ms] ${
                   show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -103,8 +95,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                         to={b.to}
                         className={
                           primary
-                            ? "inline-flex h-12 items-center justify-center rounded-full px-8 bg-[#2f5d50] text-sm font-semibold text-white shadow-lg shadow-[#2f5d50]/40 transition-all duration-300 hover:bg-[#24463c] hover:-translate-y-0.5 hover:shadow-[#2f5d50]/60"
-                            : "inline-flex h-12 items-center justify-center rounded-full px-8 border border-white/30 bg-white/5 text-sm font-semibold text-white/90 transition-all duration-300 hover:border-[#2f5d50] hover:text-[#2f5d50]"
+                            ? "inline-flex h-12 items-center justify-center rounded-full px-8 bg-[#2f5d50] text-sm font-semibold text-white shadow-lg shadow-[#2f5d50]/35 transition-all duration-300 hover:bg-[#24463c] hover:-translate-y-0.5 hover:shadow-[#2f5d50]/55"
+                            : "inline-flex h-12 items-center justify-center rounded-full px-8 border border-white/35 bg-white/10 text-sm font-semibold text-white transition-all duration-300 hover:border-white/60 hover:bg-white/15"
                         }
                       >
                         {b.label}
@@ -114,16 +106,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
               )}
 
-              {/* Trust line */}
               <p className="mt-4 text-sm text-white/60">
                 We typically respond within 24 hours
               </p>
 
             </div>
 
-            {/* RIGHT */}
             {!hideRight && (
-              <div className={`hidden lg:grid gap-6 transition-all duration-1000 ${
+              <div className={`hidden gap-5 lg:grid transition-all duration-1000 ${
                 show ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
               }`}>
                 {[
@@ -142,7 +132,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 ].map((item) => (
                   <div
                     key={item.title}
-                    className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#2f5d50]/60"
+                    className="animate-soft-float rounded-2xl border border-white/15 bg-white/[0.08] p-6 shadow-2xl shadow-black/10 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/30"
                   >
                     <h3 className="text-lg font-semibold text-white">
                       {item.title}

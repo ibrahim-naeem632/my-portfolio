@@ -2,49 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   FaFacebookF,
-  FaInstagram,
-  FaWhatsapp,
   FaGithub,
+  FaInstagram,
   FaLinkedinIn,
+  FaWhatsapp,
 } from "react-icons/fa";
 import { FaUpwork } from "react-icons/fa6";
 
+const socials = [
+  { icon: FaFacebookF, link: "https://www.facebook.com/share/1LYP52Ksxj/" },
+  { icon: FaInstagram, link: "#" },
+  { icon: FaLinkedinIn, link: "#" },
+  { icon: FaGithub, link: "https://github.com/ibrahim-naeem632" },
+  { icon: FaWhatsapp, link: "https://wa.me/923314409180" },
+  {
+    icon: FaUpwork,
+    link: "https://www.upwork.com/freelancers/~01a0224b55c64db1d6?mp_source=share",
+  },
+];
+
 const Footer: React.FC = () => {
-
-  const socials = [
-    { icon: FaFacebookF, link: "https://www.facebook.com/share/1LYP52Ksxj/" },
-    { icon: FaInstagram, link: "#" },
-    { icon: FaLinkedinIn, link: "#" },
-    { icon: FaGithub, link: "https://github.com/ibrahim-naeem632" },
-    { icon: FaWhatsapp, link: "https://wa.me/923314409180" },
-    {
-      icon: FaUpwork,
-      link: "https://www.upwork.com/freelancers/~01a0224b55c64db1d6?mp_source=share",
-    },
-  ];
-
   return (
-    <footer className="relative mt-24 border-t border-black/10 bg-[#f8f7f4]">
-      
-      {/* glow */}
+    <footer className="relative border-t border-black/10 bg-[#f3f1eb]">
       <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#2f5d50]/10 blur-[120px]" />
 
-      <div className="relative mx-auto w-full max-w-[1200px] px-6 py-16">
-        <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-4">
-
-          {/* Brand */}
+      <div className="relative mx-auto w-full max-w-[1200px] px-4 py-14 sm:px-6 sm:py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-14">
           <div className="space-y-4">
-            <p className="text-lg font-bold text-[#2b2b2b]">
-              Coder Creative
-            </p>
+            <p className="text-lg font-bold text-[#2b2b2b]">Coder Creative</p>
 
             <p className="text-sm leading-relaxed text-[#2b2b2b]/70">
               We build modern websites and web applications with a focus on
               performance, scalability, and long-term reliability.
             </p>
 
-            {/* Socials */}
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex flex-wrap items-center gap-2 pt-2">
               {socials.map((item, i) => {
                 const Icon = item.icon;
                 return (
@@ -53,11 +45,12 @@ const Footer: React.FC = () => {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`rounded-full p-2 text-[#2b2b2b]/70 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#2f5d50]/10 hover:text-[#2f5d50] ${
+                    className={`grid h-9 w-9 place-items-center rounded-full border border-black/10 bg-white/60 text-[#2b2b2b]/70 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2f5d50]/20 hover:bg-[#2f5d50]/10 hover:text-[#2f5d50] ${
                       item.link.includes("upwork")
                         ? "text-green-600 hover:bg-green-100"
                         : ""
                     }`}
+                    aria-label="Social profile"
                   >
                     <Icon size={15} />
                   </a>
@@ -66,24 +59,21 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Services */}
           <div>
-            <p className="text-sm font-semibold text-[#2b2b2b]">
-              Services
-            </p>
+            <p className="text-sm font-semibold text-[#2b2b2b]">Services</p>
 
             <ul className="mt-5 space-y-3 text-sm text-[#2b2b2b]/70">
               {[
-                { label: "Website Development", to: "/services" },
-                { label: "Web Applications", to: "/services" },
-                { label: "Landing Pages", to: "/services" },
-                { label: "Maintenance", to: "/services" },
-                { label: "Optimization", to: "/services" },
+                { label: "Website Development", to: "/" },
+                { label: "Web Applications", to: "/" },
+                { label: "Landing Pages", to: "/" },
+                { label: "Maintenance", to: "/" },
+                { label: "Optimization", to: "/" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
                     to={item.to}
-                    className="transition hover:translate-x-1 hover:text-[#2f5d50]"
+                    className="inline-block transition hover:translate-x-1 hover:text-[#2f5d50]"
                   >
                     {item.label}
                   </Link>
@@ -92,11 +82,8 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Company */}
           <div>
-            <p className="text-sm font-semibold text-[#2b2b2b]">
-              Company
-            </p>
+            <p className="text-sm font-semibold text-[#2b2b2b]">Company</p>
 
             <ul className="mt-5 space-y-3 text-sm text-[#2b2b2b]/70">
               {[
@@ -108,7 +95,7 @@ const Footer: React.FC = () => {
                 <li key={item.label}>
                   <Link
                     to={item.to}
-                    className="transition hover:translate-x-1 hover:text-[#2f5d50]"
+                    className="inline-block transition hover:translate-x-1 hover:text-[#2f5d50]"
                   >
                     {item.label}
                   </Link>
@@ -117,51 +104,43 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div className="space-y-5">
-            <p className="text-sm font-semibold text-[#2b2b2b]">
-              Contact
-            </p>
+            <p className="text-sm font-semibold text-[#2b2b2b]">Contact</p>
 
             <div className="space-y-4 text-sm text-[#2b2b2b]/70">
               <div>
-                <p className="text-[#2b2b2b]">Email</p>
+                <p className="font-medium text-[#2b2b2b]">Email</p>
                 <a
                   href="mailto:ibrahim.naeem632@gmail.com"
-                  className="hover:text-[#2f5d50]"
+                  className="break-words hover:text-[#2f5d50]"
                 >
                   ibrahim.naeem632@gmail.com
                 </a>
               </div>
 
               <div>
-                <p className="text-[#2b2b2b]">Phone</p>
-                <a
-                  href="tel:+923314409180"
-                  className="hover:text-[#2f5d50]"
-                >
+                <p className="font-medium text-[#2b2b2b]">Phone</p>
+                <a href="tel:+923314409180" className="hover:text-[#2f5d50]">
                   +92 331 440 9180
                 </a>
               </div>
 
               <div>
-                <p className="text-[#2b2b2b]">Location</p>
-                <p>Pakistan • Remote Worldwide</p>
+                <p className="font-medium text-[#2b2b2b]">Location</p>
+                <p>Pakistan - Remote Worldwide</p>
               </div>
 
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-[#2f5d50] px-6 py-3 text-sm font-medium text-white shadow-md shadow-[#2f5d50]/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#24463c]"
+                className="inline-flex items-center justify-center rounded-full bg-[#2f5d50] px-6 py-3 text-sm font-medium text-white shadow-md shadow-[#2f5d50]/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#24463c]"
               >
                 Start a Project
               </Link>
             </div>
           </div>
-
         </div>
 
-        {/* Bottom */}
-        <div className="mt-14 flex flex-col gap-4 border-t border-black/10 pt-6 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-black/10 pt-6 md:flex-row md:items-center md:justify-between">
           <p className="text-xs text-[#2b2b2b]/50">
             © {new Date().getFullYear()} Coder Creative. All rights reserved.
           </p>

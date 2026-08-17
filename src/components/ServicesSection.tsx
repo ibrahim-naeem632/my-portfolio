@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaLaptopCode, FaCode, FaBolt, FaWrench } from "react-icons/fa";
+import React from "react";
+import { FaBolt, FaCode, FaLaptopCode, FaWrench } from "react-icons/fa";
+import { useGsapReveal } from "../hooks/useGsapReveal";
 
 type Service = {
   title: string;
@@ -35,94 +36,53 @@ const services: Service[] = [
 ];
 
 const ServicesSection: React.FC = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  // 👇 Scroll animation trigger
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
-  }, []);
+  const ref = useGsapReveal<HTMLElement>();
 
   return (
-    <section
-      ref={ref}
-      className="relative mx-auto max-w-[1200px] py-24 px-6"
-    >
-      {/* Glow */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#2f5d50]/10 blur-[140px]" />
-
-      {/* Header */}
+    <section ref={ref} className="relative mx-auto max-w-[1200px] px-4 py-20 sm:px-6 sm:py-24">
       <div
-        className={`mb-16 max-w-2xl transition-all duration-700 ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-        }`}
-      >
-        <p className="text-sm font-semibold text-[#2f5d50]">
-          Services
-        </p>
+        data-parallax
+        className="pointer-events-none absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#2f5d50]/10 blur-[140px]"
+      />
 
-        <h2 className="mt-2 text-3xl font-bold text-[#2b2b2b]">
+      <div data-reveal className="mb-14 max-w-2xl">
+        <p className="text-sm font-semibold text-[#2f5d50]">Services</p>
+
+        <h2 className="mt-2 text-3xl font-bold leading-tight text-[#2b2b2b] sm:text-4xl">
           Solutions built for real business growth
         </h2>
 
         <p className="mt-4 text-sm leading-relaxed text-[#2b2b2b]/70">
-          We design and develop modern digital products that are fast,
-          scalable, and built to deliver measurable results.
+          We design and develop modern digital products that are fast, scalable,
+          and built to deliver measurable results.
         </p>
       </div>
 
-      {/* Cards */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {services.map((s, index) => (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        {services.map((service) => (
           <div
-            key={s.title}
-            className={`group relative rounded-2xl bg-[#f8f7f4] border border-black/10 p-6 overflow-hidden transition-all duration-500 ${
-              visible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            } hover:-translate-y-3 hover:shadow-2xl hover:shadow-[#2f5d50]/20`}
-            style={{
-              transitionDelay: `${index * 120}ms`,
-            }}
+            data-reveal
+            key={service.title}
+            className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white/85 p-6 shadow-sm shadow-black/[0.03] transition-all duration-500 hover:-translate-y-3 hover:border-[#2f5d50]/25 hover:shadow-2xl hover:shadow-[#2f5d50]/15"
           >
-            {/* Gradient border effect */}
-            <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-[#2f5d50]/40 transition-all duration-300" />
-
-            {/* Glow */}
-            <div className="pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full bg-[#2f5d50]/15 blur-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-0 rounded-2xl border border-transparent transition-all duration-300 group-hover:border-[#2f5d50]/35" />
+            <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#2f5d50]/15 opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100" />
 
             <div className="relative z-10 flex flex-col gap-4">
-              {/* Icon */}
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#2f5d50]/10 text-[#2f5d50] transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110">
-                {s.icon}
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#2f5d50]/10 text-[#2f5d50] transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#2f5d50] group-hover:text-white">
+                {service.icon}
               </div>
 
-              {/* Title */}
               <h3 className="text-lg font-semibold text-[#2b2b2b]">
-                {s.title}
+                {service.title}
               </h3>
 
-              {/* Description */}
               <p className="text-sm leading-relaxed text-[#2b2b2b]/70">
-                {s.description}
+                {service.description}
               </p>
 
-              {/* Subtle CTA */}
-              <span className="mt-2 text-sm font-medium text-[#2f5d50] opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                Learn more →
+              <span className="mt-2 text-sm font-medium text-[#2f5d50] opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">
+                Learn more
               </span>
             </div>
           </div>

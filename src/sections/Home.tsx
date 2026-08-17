@@ -4,6 +4,7 @@ import ServicesSection from "../components/ServicesSection";
 import ProcessSection from "../components/ProcessSection";
 import WhyMeSection from "../components/WhyMeSection";
 import ProjectsTeaserSection from "../components/ProjectTeaser";
+import TestimonialsSection from "../components/TestimonialsSection";
 import FinalCTASection from "../components/FinalSection";
 export default function Home() {
   return (
@@ -34,6 +35,7 @@ export default function Home() {
         <ProcessSection />
         <WhyMeSection />
         <ProjectsTeaserSection />   
+        <TestimonialsSection />
         <FinalCTASection />
       
       
